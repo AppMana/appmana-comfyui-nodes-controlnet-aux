@@ -5,6 +5,7 @@ import cv2
 import os
 from typing import List, Tuple, Union, Optional
 
+from controlnet_aux_config import current_config
 from .body import BodyResult, Keypoint
 
 eps = 0.01
@@ -424,10 +425,7 @@ def guess_onnx_input_shape_dtype(filename):
         input_size = (256, 256)
     return input_size, dtype
 
-if os.getenv('AUX_ORT_PROVIDERS'):
-    ONNX_PROVIDERS = os.getenv('AUX_ORT_PROVIDERS').split(',')
-else:
-    ONNX_PROVIDERS = ["CUDAExecutionProvider", "DirectMLExecutionProvider", "OpenVINOExecutionProvider", "ROCMExecutionProvider", "CPUExecutionProvider"]
+ONNX_PROVIDERS = current_config.ort_providers
 def get_ort_providers() -> List[str]:
     providers = []
     try:

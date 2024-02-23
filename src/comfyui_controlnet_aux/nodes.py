@@ -1,5 +1,5 @@
 import sys, os
-from .utils import here, create_node_input_types
+from .utils import create_node_input_types
 from pathlib import Path
 import threading
 import traceback
@@ -9,9 +9,6 @@ from .log import log, blue_text, cyan_text, get_summary, get_label
 from .hint_image_enchance import NODE_CLASS_MAPPINGS as HIE_NODE_CLASS_MAPPINGS
 from .hint_image_enchance import NODE_DISPLAY_NAME_MAPPINGS as HIE_NODE_DISPLAY_NAME_MAPPINGS
 #Ref: https://github.com/comfyanonymous/ComfyUI/blob/76d53c4622fc06372975ed2a43ad345935b8a551/nodes.py#L17
-sys.path.insert(0, str(Path(here, "src").resolve()))
-for pkg_name in ["controlnet_aux", "custom_mmpkg"]:
-    sys.path.append(str(Path(here, "src", pkg_name).resolve()))
 
 #Enable CPU fallback for ops not being supported by MPS like upsample_bicubic2d.out
 #https://github.com/pytorch/pytorch/issues/77764
@@ -25,7 +22,7 @@ def load_nodes():
     node_class_mappings = {}
     node_display_name_mappings = {}
 
-    for filename in (here / "node_wrappers").iterdir():
+    for filename in (Path(__file__).parent.resolve() / "node_wrappers").iterdir():
         
         module_name = filename.stem
         try:

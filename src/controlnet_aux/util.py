@@ -7,6 +7,8 @@ import torch
 from pathlib import Path
 import warnings
 from huggingface_hub import hf_hub_download
+from controlnet_aux_config import current_config
+
 
 TORCHHUB_PATH = Path(__file__).parent / 'depth_anything' / 'torchhub'
 HF_MODEL_NAME = "lllyasviel/Annotators"
@@ -19,20 +21,9 @@ UNIMATCH_MODEL_NAME = "hr16/Unimatch"
 DEPTH_ANYTHING_MODEL_NAME = "LiheYoung/Depth-Anything" #HF Space
 DIFFUSION_EDGE_MODEL_NAME = "hr16/Diffusion-Edge"
 
-annotator_ckpts_path = os.path.join(Path(__file__).parents[2], 'ckpts')
-USE_SYMLINKS = False
+annotator_ckpts_path = current_config.annotator_checkpoints_path
+USE_SYMLINKS = current_config.use_symlinks
 
-try:
-    annotator_ckpts_path = os.environ['AUX_ANNOTATOR_CKPTS_PATH']
-except:
-    warnings.warn("Custom pressesor model path not set successfully.")
-    pass
-
-try:
-    USE_SYMLINKS = eval(os.environ['AUX_USE_SYMLINKS'])
-except:
-    warnings.warn("USE_SYMLINKS not set successfully. Using default value: False to download models.")
-    pass
 
 # fix SSL: CERTIFICATE_VERIFY_FAILED issue with pytorch download https://github.com/pytorch/pytorch/issues/33288
 try:
