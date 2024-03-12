@@ -3,7 +3,7 @@ torch
 importlib_metadata
 huggingface_hub
 scipy
-opencv-python-headless
+opencv-python
 filelock
 numpy
 Pillow
