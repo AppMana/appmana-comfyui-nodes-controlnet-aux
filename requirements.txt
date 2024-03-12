@@ -30,4 +30,3 @@ fvcore
 iopath
 xformers
 submitit
-cuml-cu12
