@@ -28,5 +28,4 @@ omegaconf
 torchmetrics
 fvcore
 iopath
-xformers
 submitit
