@@ -1,4 +1,14 @@
-# ComfyUI's ControlNet Auxiliary Preprocessors
+# Installable ControlNet Auxiliary Preprocessors
+
+This is a fork of the repository for ControlNet preprocessors that can be installed using:
+
+```shell
+# if you don't already use installable comfyui:
+pip install git+https://github.com/hiddenswitch/ComfyUI.git
+# installing these nodes:
+pip install git+https://github.com/AppMana/comfyui_controlnet_aux.git
+```
+
 ![](./examples/example_mesh_graphormer.png)
 Plug-and-play [ComfyUI](https://github.com/comfyanonymous/ComfyUI) node sets for making [ControlNet](https://github.com/lllyasviel/ControlNet/) hint images
 
@@ -15,25 +25,6 @@ https://github.com/kijai/ComfyUI-Marigold
 
 # Updates
 Go to [Update page](./UPDATES.md) to follow updates
-
-# Installation:
-## Using ComfyUI Manager (recommended):
-Install [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) and do steps introduced there to install this repo.
-
-## Alternative:
-If you're running on Linux, or non-admin account on windows you'll want to ensure `/ComfyUI/custom_nodes` and `comfyui_controlnet_aux` has write permissions.
-
-There is now a **install.bat** you can run to install to portable if detected. Otherwise it will default to system and assume you followed ConfyUI's manual installation steps. 
-
-If you can't run **install.bat** (e.g. you are a Linux user). Open the CMD/Shell and do the following:
-  - Navigate to your `/ComfyUI/custom_nodes/` folder
-  - Run `git clone https://github.com/Fannovel16/comfyui_controlnet_aux/`
-  - Navigate to your `comfyui_controlnet_aux` folder
-    - Portable/venv:
-       - Run `path/to/ComfUI/python_embeded/python.exe -s -m pip install -r requirements.txt`
-	- With system python
-	   - Run `pip install -r requirements.txt`
-  - Start ComfyUI
 
 # Nodes
 Please note that this repo only supports preprocessors making hint images (e.g. stickman, canny edge, etc).
@@ -58,6 +49,7 @@ You need to use its node directly to set thresholds.
 | Scribble XDoG Lines         | scribble_xdog             | control_v11p_sd15_scribble <br> control_scribble |
 | Fake Scribble Lines         | scribble_hed              | control_v11p_sd15_scribble <br> control_scribble |
 | TEED Soft-Edge Lines        | teed                      | [controlnet-sd-xl-1.0-softedge-dexined](https://huggingface.co/SargeZT/controlnet-sd-xl-1.0-softedge-dexined/blob/main/controlnet-sd-xl-1.0-softedge-dexined.safetensors) <br> control_v11p_sd15_softedge (Theoretically)
+| Scribble PiDiNet Lines      | scribble_pidinet          | control_v11p_sd15_scribble <br> control_scribble |
 
 ## Normal and Depth Estimators
 | Preprocessor Node           | sd-webui-controlnet/other |          ControlNet/T2I-Adapter           |
@@ -70,6 +62,7 @@ You need to use its node directly to set thresholds.
 | MeshGraphormer Hand Refiner ([HandRefinder](https://github.com/wenquanlu/HandRefiner))  | depth_hand_refiner | [control_sd15_inpaint_depth_hand_fp16](https://huggingface.co/hr16/ControlNet-HandRefiner-pruned/blob/main/control_sd15_inpaint_depth_hand_fp16.safetensors) |
 | Depth Anything            |                           | [Depth-Anything](https://huggingface.co/spaces/LiheYoung/Depth-Anything/blob/main/checkpoints_controlnet/diffusion_pytorch_model.safetensors) |
 | Zoe Depth Anything <br> (Basically Zoe but the encoder is replaced with DepthAnything)       | depth_anything | [Depth-Anything](https://huggingface.co/spaces/LiheYoung/Depth-Anything/blob/main/checkpoints_controlnet/diffusion_pytorch_model.safetensors) |
+| Normal DSINE              |                           | control_normal/control_v11p_sd15_normalbae |
 
 ## Faces and Poses Estimators
 | Preprocessor Node           | sd-webui-controlnet/other |          ControlNet/T2I-Adapter           |
@@ -197,6 +190,8 @@ Credit to https://huggingface.co/thibaud/controlnet-sd21 for most examples below
 ![](./examples/example_mesh_graphormer.png)
 ## Depth Anything & Zoe Depth Anything
 ![](./examples/example_depth_anything.png)
+## DSINE
+![](./examples/example_dsine.png)
 
 ## Faces and Poses
 ### OpenPose

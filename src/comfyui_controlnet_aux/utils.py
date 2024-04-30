@@ -1,14 +1,13 @@
-import torch
-import numpy as np
-import os
-import cv2
-import yaml
-from pathlib import Path
-from enum import Enum
-from .log import log
 import subprocess
 import threading
+from enum import Enum
 
+import cv2
+import numpy as np
+import torch
+
+from comfy.utils import ProgressBar
+from .log import log
 
 MAX_RESOLUTION=2048 #Who the hell feed 4k images to ControlNet?
 
@@ -27,12 +26,18 @@ def common_annotator_call(model, tensor_image, input_batch=False, **kwargs):
         np_results = model(np_images, output_type="np", detect_resolution=detect_resolution, **kwargs)
         return torch.from_numpy(np_results.astype(np.float32) / 255.0)
 
-    out_list = []
-    for image in tensor_image:
+    batch_size = tensor_image.shape[0]
+    pbar = ProgressBar(batch_size)
+    out_tensor = None
+    for i, image in enumerate(tensor_image):
         np_image = np.asarray(image.cpu() * 255., dtype=np.uint8)
         np_result = model(np_image, output_type="np", detect_resolution=detect_resolution, **kwargs)
-        out_list.append(torch.from_numpy(np_result.astype(np.float32) / 255.0))
-    return torch.stack(out_list, dim=0)
+        out = torch.from_numpy(np_result.astype(np.float32) / 255.0)
+        if out_tensor is None:
+            out_tensor = torch.zeros(batch_size, *out.shape, dtype=torch.float32)
+        out_tensor[i] = out
+        pbar.update(1)
+    return out_tensor
 
 def create_node_input_types(**extra_kwargs):
     return {
@@ -155,3 +160,20 @@ def run_script(cmd, cwd='.'):
     stderr_thread.join()
 
     return process.wait()
+
+def nms(x, t, s):
+    x = cv2.GaussianBlur(x.astype(np.float32), (0, 0), s)
+
+    f1 = np.array([[0, 0, 0], [1, 1, 1], [0, 0, 0]], dtype=np.uint8)
+    f2 = np.array([[0, 1, 0], [0, 1, 0], [0, 1, 0]], dtype=np.uint8)
+    f3 = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=np.uint8)
+    f4 = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]], dtype=np.uint8)
+
+    y = np.zeros_like(x)
+
+    for f in [f1, f2, f3, f4]:
+        np.putmask(y, cv2.dilate(x, kernel=f) == x, x)
+
+    z = np.zeros_like(y, dtype=np.uint8)
+    z[y > t] = 255
+    return z

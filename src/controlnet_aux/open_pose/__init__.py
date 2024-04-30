@@ -66,7 +66,8 @@ def draw_poses(poses: List[PoseResult], H, W, draw_body=True, draw_hand=True, dr
 
     return canvas
 
-def encode_poses_as_dict(poses: List[PoseResult], canvas_height: int, canvas_width: int) -> str:
+# todo: this was originally returning a str type, was the dict supposed to be JSON-ified?
+def encode_poses_as_dict(poses: List[PoseResult], canvas_height: int, canvas_width: int) -> dict:
     """ Encode the pose as a dict following openpose JSON output format:
     https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/02_output.md
     """

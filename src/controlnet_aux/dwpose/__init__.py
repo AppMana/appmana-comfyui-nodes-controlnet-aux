@@ -5,8 +5,6 @@
 # 4th Edited by ControlNet (added face and correct hands)
 # 5th Edited by ControlNet (Improved JSON serialization/deserialization, and lots of bug fixs)
 # This preprocessor is licensed by CMU for non-commercial use only.
-import torch.utils.benchmark as benchmark
-benchmark.timer()
 
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -116,8 +114,8 @@ def decode_json_as_poses(json_string: str, normalize_coords: bool = False) -> Tu
         width,
     )
 
-
-def encode_poses_as_dict(poses: List[PoseResult], canvas_height: int, canvas_width: int) -> str:
+# todo: this was originally returning a str type, was the dict supposed to be JSON-ified?
+def encode_poses_as_dict(poses: List[PoseResult], canvas_height: int, canvas_width: int) -> dict:
     """ Encode the pose as a dict following openpose JSON output format:
     https://github.com/CMU-Perceptual-Computing-Lab/openpose/blob/master/doc/02_output.md
     """
