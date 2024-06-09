@@ -8,6 +8,7 @@ import cv2
 import numpy as np
 import torch
 from torch.hub import get_dir, download_url_to_file
+from ast import literal_eval
 
 from comfy.model_downloader import get_or_download
 from comfy.model_downloader_types import HuggingFile
@@ -23,6 +24,7 @@ SAM_MODEL_NAME = "dhkim2810/MobileSAM"
 UNIMATCH_MODEL_NAME = "hr16/Unimatch"
 DEPTH_ANYTHING_MODEL_NAME = "LiheYoung/Depth-Anything"  # HF Space
 DIFFUSION_EDGE_MODEL_NAME = "hr16/Diffusion-Edge"
+METRIC3D_MODEL_NAME = "JUGGHM/Metric3D"
 
 annotator_ckpts_path = current_config.annotator_checkpoints_path
 here = Path(__file__).parent.resolve()
@@ -133,6 +135,8 @@ def resize_image_with_pad(input_image, resolution, upscale_method="", skip_hwc3=
     else:
         img = HWC3(input_image)
     H_raw, W_raw, _ = img.shape
+    if resolution == 0:
+        return img, lambda x: x
     k = float(resolution) / float(min(H_raw, W_raw))
     H_target = int(np.round(float(H_raw) * k))
     W_target = int(np.round(float(W_raw) * k))
