@@ -1,7 +1,7 @@
 from typing import Optional
 
 import configargparse
-import onnxruntime
+
 from comfy.cli_args_types import Configuration
 
 
@@ -17,7 +17,7 @@ def add_configuration(parser: configargparse.ArgParser) -> configargparse.ArgPar
                         env_var="AUX_USE_SYMLINKS")
     parser.add_argument("--ort-providers",
                         type=str,
-                        help=f"Comma-separated list of ONNX Runtime Provider names. Available providers: {','.join(onnxruntime.get_available_providers())}",
+                        help=f"Comma-separated list of ONNX Runtime Provider names. Available providers: {','.join(['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider'])}",
                         env_var="AUX_ORT_PROVIDERS")
     return parser
 
