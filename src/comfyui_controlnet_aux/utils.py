@@ -50,7 +50,7 @@ def create_node_input_types(**extra_kwargs):
         },
         "optional": {
             **extra_kwargs,
-            "resolution": ("INT", {"default": 512, "min": 64, "max": MAX_RESOLUTION, "step": 64})
+            "resolution": ("INT", {"default": 512, "min": 64, "max": MAX_RESOLUTION, "step": 32})
         }
     }
 
