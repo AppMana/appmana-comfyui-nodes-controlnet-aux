@@ -13,7 +13,7 @@ setup(
     description='',
     entry_points={
         'comfyui.custom_nodes': [
-            'comfyui_controlnet_aux = comfyui_controlnet_aux',
+            'comfyui_controlnet_aux = comfyui_controlnet_aux.nodes',
         ],
         'comfyui.custom_config': [
             'comfyui_controlnet_aux = controlnet_aux_config.add_configuration:add_configuration',
