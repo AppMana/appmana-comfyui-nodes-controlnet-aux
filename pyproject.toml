@@ -1,3 +1,17 @@
+[project]
+name = "comfyui_controlnet_aux"
+description = "Plug-and-play ComfyUI node sets for making ControlNet hint images"
+version = "1.0.1"
+license = { file = "LICENSE" }
+
+[project.urls]
+Repository = "https://github.com/Fannovel16/comfyui_controlnet_aux"
+
+[tool.comfy]
+PublisherId = "fannovel16"
+DisplayName = "comfyui_controlnet_aux"
+Icon = ""
+
 [build-system]
 requires = ["setuptools", "wheel", "pip"]
 build-backend = "setuptools.build_meta"

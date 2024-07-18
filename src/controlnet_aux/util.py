@@ -25,6 +25,14 @@ UNIMATCH_MODEL_NAME = "hr16/Unimatch"
 DEPTH_ANYTHING_MODEL_NAME = "LiheYoung/Depth-Anything"  # HF Space
 DIFFUSION_EDGE_MODEL_NAME = "hr16/Diffusion-Edge"
 METRIC3D_MODEL_NAME = "JUGGHM/Metric3D"
+DEPTH_ANYTHING_V2_MODEL_NAME_DICT = {
+    "depth_anything_v2_vits.pth": "depth-anything/Depth-Anything-V2-Small",
+    "depth_anything_v2_vitb.pth": "depth-anything/Depth-Anything-V2-Base",
+    "depth_anything_v2_vitl.pth": "depth-anything/Depth-Anything-V2-Large",
+    "depth_anything_v2_vitg.pth": "depth-anything/Depth-Anything-V2-Giant",
+    "depth_anything_v2_metric_vkitti_vitl.pth": "depth-anything/Depth-Anything-V2-Metric-VKITTI-Large",
+    "depth_anything_v2_metric_hypersim_vitl.pth": "depth-anything/Depth-Anything-V2-Metric-Hypersim-Large"
+}
 
 annotator_ckpts_path = current_config.annotator_checkpoints_path
 here = Path(__file__).parent.resolve()
