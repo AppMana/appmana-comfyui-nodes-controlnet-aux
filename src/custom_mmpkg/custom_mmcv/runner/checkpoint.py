@@ -15,6 +15,7 @@ import torchvision
 from torch.optim import Optimizer
 from torch.utils import model_zoo
 
+import comfy.component_model.executor_types
 import custom_mmpkg.custom_mmcv as mmcv
 from ..fileio import FileClient
 from ..fileio import load as load_file
@@ -692,7 +693,7 @@ def save_checkpoint(model,
         model_dir, model_name = osp.split(model_path)
         try:
             model = modelcloud.get(model_dir)
-        except exception.NodeNotFoundError:
+        except comfy.component_model.executor_types.NodeNotFoundError:
             model = root.create_training_model(model_dir)
         with TemporaryDirectory() as tmp_dir:
             checkpoint_file = osp.join(tmp_dir, model_name)
