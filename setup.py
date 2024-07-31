@@ -19,6 +19,6 @@ setup(
     },
     include_package_data=True,
     package_data={
-        package_or_module: ['*.json'] for package_or_module in packages
+        package_or_module: ['**/*'] for package_or_module in packages
     },
 )

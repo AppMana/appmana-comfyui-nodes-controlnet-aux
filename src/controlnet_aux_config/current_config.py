@@ -7,9 +7,7 @@ typed_args: PreprocessorsConfiguration = args
 
 annotator_checkpoints_path = typed_args.annotator_ckpts_path
 if annotator_checkpoints_path is None:
-    folder_paths.add_model_folder_path("annotator_checkpoints",
-                                       os.path.join(folder_paths.models_dir, "annotator_checkpoints"))
-    annotator_checkpoints_path = folder_paths.get_folder_paths("annotator_checkpoints")[0]
+    annotator_checkpoints_path = folder_paths.add_model_folder_path("annotator_checkpoints")
 
 use_symlinks = typed_args.use_symlinks or False
 

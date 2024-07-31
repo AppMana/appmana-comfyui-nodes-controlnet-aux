@@ -1,6 +1,7 @@
 import os
 import posixpath
 import random
+import sys
 import warnings
 from pathlib import Path
 
@@ -8,13 +9,25 @@ import cv2
 import numpy as np
 import torch
 from torch.hub import get_dir, download_url_to_file
-from ast import literal_eval
 
 from comfy.model_downloader import get_or_download
 from comfy.model_downloader_types import HuggingFile
+from comfy.component_model.files import get_package_as_path
 from controlnet_aux_config import current_config
 
-TORCHHUB_PATH = Path(__file__).parent / 'depth_anything' / 'torchhub'
+def _get_torchhub_path():
+    warnings.warn(
+        "The global variable 'TORCHHUB_PATH' is deprecated and will be removed in a future version. Use get_torchhub_path() instead",
+        DeprecationWarning,
+        stacklevel=2
+    )
+    return get_torchhub_path()
+
+def get_torchhub_path() -> str:
+    return get_package_as_path(f"{__package__}.depth_anything", subdir="torchhub")
+
+
+setattr(sys.modules[__name__], 'TORCHHUB_PATH', property(_get_torchhub_path))
 HF_MODEL_NAME = "lllyasviel/Annotators"
 DWPOSE_MODEL_NAME = "yzd-v/DWPose"
 BDS_MODEL_NAME = "bdsqlsz/qinglong_controlnet-lllite"
