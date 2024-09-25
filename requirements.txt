@@ -28,3 +28,4 @@ torchmetrics
 fvcore
 iopath
 submitit
+matplotlib

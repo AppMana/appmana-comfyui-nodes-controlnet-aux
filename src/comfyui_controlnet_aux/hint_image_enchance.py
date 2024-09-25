@@ -229,5 +229,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "PixelPerfectResolution": "Pixel Perfect Resolution",
     "ImageGenResolutionFromImage": "Generation Resolution From Image",
     "ImageGenResolutionFromLatent": "Generation Resolution From Latent",
-    "HintImageEnchance": "Enchance And Resize Hint Images"
+    "HintImageEnchance": "Enhance And Resize Hint Images"
 }
