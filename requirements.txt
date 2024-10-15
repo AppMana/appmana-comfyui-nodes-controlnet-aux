@@ -23,7 +23,7 @@ trimesh[easy]
 albumentations
 scikit-learn
 onnxruntime
-onnxruntime-gpu
+onnxruntime-gpu ;platform_system != "Darwin"
 omegaconf
 torchmetrics
 fvcore
