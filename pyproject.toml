@@ -3,7 +3,40 @@ name = "comfyui_controlnet_aux"
 description = "Plug-and-play ComfyUI node sets for making ControlNet hint images"
 version = "1.0.4-alpha.9"
 license = { file = "LICENSE" }
-dynamic = ["dependencies"]
+dependencies = [
+  "comfyui",
+  "importlib_metadata",
+  "huggingface_hub",
+  "scipy",
+  "opencv-python-headless>=4.9.0.80",
+  "filelock",
+  "numpy",
+  "Pillow",
+  "einops",
+  "torchvision",
+  "pyyaml",
+  "scikit-image",
+  "python-dateutil",
+  "mediapipe",
+  "svglib",
+  "fvcore",
+  "yapf",
+  "omegaconf",
+  "ftfy",
+  "addict",
+  "yacs",
+  "trimesh[easy]",
+  "albumentations",
+  "scikit-learn",
+  "onnxruntime",
+  "onnxruntime-gpu ;platform_system != 'Darwin'",
+  "omegaconf",
+  "torchmetrics",
+  "fvcore",
+  "iopath",
+  "submitit",
+  "matplotlib",
+]
 
 [project.urls]
 Repository = "https://github.com/Fannovel16/comfyui_controlnet_aux"
@@ -28,6 +61,3 @@ comfyui_controlnet_aux = "controlnet_aux_config.add_configuration:add_configurat
 [build-system]
 requires = ["setuptools", "wheel", "pip"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools.dynamic]
-dependencies = { file = ["requirements.txt"] }
