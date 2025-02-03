@@ -6,11 +6,6 @@ from comfy.cli_args_types import Configuration
 
 
 def add_configuration(parser: configargparse.ArgParser) -> configargparse.ArgParser:
-    parser.add_argument("--annotator-ckpts-path",
-                        required=False,
-                        type=str,
-                        help="Configure the location for HuggingFace model downloads or the pre-existing HuggingFace cache path. Defaults to the `models/huggingface` directory (changed from master)",
-                        env_var="AUX_ANNOTATOR_CKPTS_PATH")
     parser.add_argument("--use-symlinks",
                         action="store_true",
                         help="Enables HuggingFace symlinks when building the HuggingFace model cache.",

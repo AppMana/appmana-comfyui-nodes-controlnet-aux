@@ -10,10 +10,15 @@ import numpy as np
 import torch
 from torch.hub import get_dir, download_url_to_file
 
+from comfy.cmd import folder_paths
+from comfy.component_model.files import get_package_as_path
+from comfy.component_model.folder_path_types import supported_pt_extensions, ModelPaths
 from comfy.model_downloader import get_or_download
 from comfy.model_downloader_types import HuggingFile
-from comfy.component_model.files import get_package_as_path
-from controlnet_aux_config import current_config
+
+FOLDER_NAME = "annotator_checkpoints"
+folder_paths.folder_names_and_paths.add(ModelPaths([FOLDER_NAME], supported_extensions=set(supported_pt_extensions)))
+
 
 def _get_torchhub_path():
     warnings.warn(
@@ -23,11 +28,27 @@ def _get_torchhub_path():
     )
     return get_torchhub_path()
 
+
 def get_torchhub_path() -> str:
     return get_package_as_path(f"{__package__}.depth_anything", subdir="torchhub")
 
 
+def _get_annotator_ckpts_path() -> str:
+    warnings.warn(
+        "The global variable 'annotator_ckpts_path' is deprecated and will be removed in a future version. Use get_annotator_ckpts_path() instead",
+        DeprecationWarning,
+        stacklevel=2
+    )
+    return get_annotator_ckpts_path()
+
+
+def get_annotator_ckpts_path() -> str:
+    return FOLDER_NAME
+
+
 setattr(sys.modules[__name__], 'TORCHHUB_PATH', property(_get_torchhub_path))
+setattr(sys.modules[__name__], 'annotator_ckpts_path', property(_get_annotator_ckpts_path()))
+
 HF_MODEL_NAME = "lllyasviel/Annotators"
 DWPOSE_MODEL_NAME = "yzd-v/DWPose"
 BDS_MODEL_NAME = "bdsqlsz/qinglong_controlnet-lllite"
@@ -47,7 +68,6 @@ DEPTH_ANYTHING_V2_MODEL_NAME_DICT = {
     "depth_anything_v2_metric_hypersim_vitl.pth": "depth-anything/Depth-Anything-V2-Metric-Hypersim-Large"
 }
 
-annotator_ckpts_path = current_config.annotator_checkpoints_path
 here = Path(__file__).parent.resolve()
 
 
@@ -295,6 +315,6 @@ def custom_torch_download(filename, ckpts_dir=annotator_ckpts_path):
 
 
 def custom_hf_download(pretrained_model_or_path, filename, subfolder='', repo_type='model', *args, **kwargs):
-    return get_or_download(annotator_ckpts_path, filename,
+    return get_or_download(get_annotator_ckpts_path(), filename,
                            [HuggingFile(pretrained_model_or_path, posixpath.join(subfolder, filename),
                                         force_save_in_repo_id=True, repo_type=repo_type)])
