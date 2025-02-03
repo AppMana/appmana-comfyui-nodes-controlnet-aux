@@ -1,7 +1,7 @@
 [project]
 name = "comfyui_controlnet_aux"
 description = "Plug-and-play ComfyUI node sets for making ControlNet hint images"
-version = "1.0.4-alpha.9"
+version = "1.0.6"
 license = { file = "LICENSE" }
 dependencies = [
   "comfyui",
