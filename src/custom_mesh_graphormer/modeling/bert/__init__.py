@@ -1,8 +1,5 @@
 __version__ = "1.0.0"
 
-from .modeling_bert import (BertConfig, BertModel,
-                       load_tf_weights_in_bert)
-
 from .modeling_graphormer import Graphormer
 
 from .e2e_body_network import Graphormer_Body_Network

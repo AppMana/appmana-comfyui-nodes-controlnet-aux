@@ -8,7 +8,7 @@ dependencies = [
   "importlib_metadata",
   "huggingface_hub",
   "scipy",
-  "opencv-python-headless>=4.9.0.80",
+  "opencv-contrib-python-headless>=4.9.0.80",
   "filelock",
   "numpy",
   "Pillow",
