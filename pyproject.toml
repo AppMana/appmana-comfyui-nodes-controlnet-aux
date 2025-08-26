@@ -61,3 +61,11 @@ comfyui_controlnet_aux = "controlnet_aux_config.add_configuration:add_configurat
 [build-system]
 requires = ["setuptools", "wheel", "pip"]
 build-backend = "setuptools.build_meta"
+
+[tool.uv]
+override-dependencies = [
+  "opencv-python; python_version < '0'",
+  "opencv-contrib-python; python_version < '0'",
+  "opencv-python-headless; python_version < '0'",
+  "opencv-contrib-python-headless!=4.11.0.86",
+]
