@@ -1,3 +1,4 @@
+import logging
 import os
 import posixpath
 import random
@@ -22,6 +23,7 @@ from comfy.component_model.module_property import create_module_properties
 
 _module_properties = create_module_properties()
 
+logger = logging.getLogger(__name__)
 
 @_module_properties.getter
 def _TORCHHUB_PATH():
@@ -287,12 +289,12 @@ def check_hash_from_torch_hub(file_path, filename):
     return curr_hash[:len(ref_hash)] == ref_hash
 
 
-def custom_torch_download(filename, ckpts_dir=annotator_ckpts_path):
+def custom_torch_download(filename, ckpts_dir=get_annotator_ckpts_path()):
     local_dir = os.path.join(get_dir(), 'checkpoints')
     model_path = os.path.join(local_dir, filename)
 
     if not os.path.exists(model_path):
-        print(f"Failed to find {model_path}.\n Downloading from pytorch.org")
+        logger.info(f"Failed to find {model_path}.\n Downloading from pytorch.org")
         local_dir = os.path.join(ckpts_dir, "torch")
         if not os.path.exists(local_dir):
             os.mkdir(local_dir)
@@ -308,9 +310,9 @@ def custom_torch_download(filename, ckpts_dir=annotator_ckpts_path):
                 download_url_to_file(url=model_url, dst=model_path)
                 assert check_hash_from_torch_hub(model_path,
                                                  filename), f"Hash check failed as file {filename} is corrupted"
-                print("Hash check passed")
+                logger.info("Hash check passed")
 
-    print(f"model_path is {model_path}")
+    logger.info(f"model_path is {model_path}")
     return model_path
 
 
