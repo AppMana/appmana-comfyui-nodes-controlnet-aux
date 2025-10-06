@@ -18,9 +18,13 @@ from comfy.model_downloader_types import HuggingFile
 
 FOLDER_NAME = "annotator_checkpoints"
 folder_paths.folder_names_and_paths.add(ModelPaths([FOLDER_NAME], supported_extensions=set(supported_pt_extensions)))
+from comfy.component_model.module_property import create_module_properties
+
+_module_properties = create_module_properties()
 
 
-def _get_torchhub_path():
+@_module_properties.getter
+def _TORCHHUB_PATH():
     warnings.warn(
         "The global variable 'TORCHHUB_PATH' is deprecated and will be removed in a future version. Use get_torchhub_path() instead",
         DeprecationWarning,
@@ -33,7 +37,8 @@ def get_torchhub_path() -> str:
     return get_package_as_path(f"{__package__}.depth_anything", subdir="torchhub")
 
 
-def _get_annotator_ckpts_path() -> str:
+@_module_properties.getter
+def _annotator_ckpts_path() -> str:
     warnings.warn(
         "The global variable 'annotator_ckpts_path' is deprecated and will be removed in a future version. Use get_annotator_ckpts_path() instead",
         DeprecationWarning,
@@ -45,9 +50,6 @@ def _get_annotator_ckpts_path() -> str:
 def get_annotator_ckpts_path() -> str:
     return FOLDER_NAME
 
-
-setattr(sys.modules[__name__], 'TORCHHUB_PATH', property(_get_torchhub_path))
-setattr(sys.modules[__name__], 'annotator_ckpts_path', property(_get_annotator_ckpts_path()))
 
 HF_MODEL_NAME = "lllyasviel/Annotators"
 DWPOSE_MODEL_NAME = "yzd-v/DWPose"
@@ -67,8 +69,6 @@ DEPTH_ANYTHING_V2_MODEL_NAME_DICT = {
     "depth_anything_v2_metric_vkitti_vitl.pth": "depth-anything/Depth-Anything-V2-Metric-VKITTI-Large",
     "depth_anything_v2_metric_hypersim_vitl.pth": "depth-anything/Depth-Anything-V2-Metric-Hypersim-Large"
 }
-
-here = Path(__file__).parent.resolve()
 
 
 def HWC3(x):
